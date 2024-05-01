@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barchart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mpld3/0.5.5/mpld3.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+</head>
+<body>
+    <h1>Barchart</h1>
+    <!-- Display the mpld3 plot -->
+    <!-- {{ mpld3_plot | safe }} -->
+    <!-- Display the image -->
+    <!-- <img src="{{ chart_path }}" alt="Barchart"> -->
+    <h1>Compound Barchart</h1>
+    <!-- Display the mpld3 plot -->
+    {{ compound_mpld3_plot | safe }}
+    <!-- Display the image -->
+    <img src="{{ compound_chart_path }}" alt="Compound Barchart">
+
+</body>
+</html>

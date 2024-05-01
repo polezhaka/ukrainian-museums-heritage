@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Mapbox Example</title>
+    <script src='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.js'></script>
+    <link href='https://api.mapbox.com/mapbox-gl-js/v3.3.0/mapbox-gl.css' rel='stylesheet' />
+    <style>
+        body { margin: 0; padding: 0; font-family: Helvetica, sans-serif; }
+        header { position: fixed; width: 95%; z-index: 1000; display: flex; justify-content: space-between; align-items: baseline; padding: 10px; }
+        header { top: 0; }
+        footer { bottom: 0; }
+        footer { position: fixed; width: 95%; z-index: 1000; text-align: center; padding: 10px; }
+        nav a { padding: 10px; } /* Adjusted line */
+        #map { position: absolute; top: 0px; bottom: 0px; width: 100%; z-index: 0; }
+        .marker {
+            background-image: url('/static/dot_dark_blue.png');
+            background-size: cover;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            cursor: pointer;
+            border: 2px solid #ffffff; /* Add a thin white outline */
+            }
+    </style>    
+</head>
+
+<body>
+
+    <header>
+        <h1 style="margin-left: 20px;">Національне культурне надбання у музеях України</h1>
+        <nav>
+            <a href="/info_in_charts">Chart view</a>
+            <a href="#">About</a>
+            <a href="https://data.gov.ua/en/dataset/014aba3a-63ed-4edf-b6b1-b26f1ad29953">Data source</a>
+        </nav>
+    </header>
+    
+<div id='map'></div>
+
+<script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoicG9sZXpoYWthIiwiYSI6ImNsdm4wazF3azA3NnkyaXAxMDllY3hmbzQifQ.oawJGIDDebEB1sR-a_BwDA';
+    const map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/light-v11',
+        center: [30.526478,50.449033], // Example center coordinates
+        zoom: 6 // Example zoom level
+    });
+
+    // Function to create a custom marker element
+    function createCustomMarker() {
+        const el = document.createElement('div');
+        el.className = 'marker';
+        return el;
+    }
+
+    // Add markers for museum locations
+    {% for index, row in data.iterrows() %}
+    new mapboxgl.Marker({
+        element: createCustomMarker(),
+        anchor: 'bottom' // Set the anchor point
+    })
+        .setLngLat([{{ row['Longitude'] }}, {{ row['Latitude'] }}])
+        .setPopup(new mapboxgl.Popup().setHTML('<h3>{{ row['Museum Name'] }}</h3><p>Унікальних музейних предметів: {{ row['ItemCount'] }}</p>'))
+        .addTo(map);
+    {% endfor %}
+
+</script>
+
+
+<footer>
+    <span style="font-size: smaller;">Data source: data.gov.ua | Visualized by <a href="https://https://www.sergiipolezhaka.com/">Sergii Polezhaka</a></span>
+</footer>
+
+
+</body>
+</html>
