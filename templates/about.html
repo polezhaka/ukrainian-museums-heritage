@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Barchart</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mpld3/0.5.5/mpld3.min.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Helvetica, sans-serif; }
+        header { position: static; width: 95%; z-index: 1000; display: flex; justify-content: space-between; align-items: baseline; padding: 10px; }
+        header { top: 0; }
+        footer { bottom: 0; }
+        footer { position: fixed; width: 95%; z-index: 1000; text-align: center; padding: 10px; }
+        nav a { padding: 10px; } /* Adjusted line */
+        #chart { padding: 50px;}
+        h2 {margin-left: 50px;}
+        .project-info { background-color: #f0f0f085; padding: 30px; margin: 20px; border-radius: 10px; max-width: 600px; }
+        .project-info h5 { margin: 0 0 15px; font-size: 16px; line-height: 1.5; }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 style="margin-left: 20px;">Національне культурне надбання у музеях України</h1>
+        <nav>
+            <a href="/">Мапа</a>
+            <a href="/info_in_charts">Графік</a>
+            <a href="/about">Про проект</a>
+            <a href="https://data.gov.ua/en/dataset/014aba3a-63ed-4edf-b6b1-b26f1ad29953" target="_blank">Джерело</a>
+        </nav>
+    </header>
+    <h2>Про проект</h2>
+
+    <div class="project-info">
+        <h5>У своїй війні Росія проявляє не лише свої територіальні претензії, а і намагається стерти українську ідентичність. Зокрема, це проявляється і у злочинах щодо українського культурного спадку - від спаленого музею Марії Примаченко до викрадених картин Архипа Куїнджі в Маріуполі.</h5>
+        <div><br></div>
+        <h5>Під час активних бойових дій подібні новини про "ще одну" втрачену культурну памятку часто лишаються непоміченими. Мені ж стало цікаво, де загалом розташовані обєкти культурної спадщини, щоб зрозуміти, які ще з них знаходяться у зоні підвищеного ризику, і звернувся до відкритих джерел.</h5>
+        <div><br></div>
+        <h5>Ця сторінка візуалізує дані з "Державного реєстру національного культурного надбання" України. Датасет містить перелік унікальних музейних предметів Музейного фонду України та оновлюється раз на рік. Для візуалізації використовується багатовимірна статистика, а також графічне зображення результатів у формі гістограми Pygal та картографіки на основі API mapbox.</h5>
+        <div><br></div>    
+        <h5>Якщо ви маєте інформацію про інші актуальні реєстри або зауваження стосовно роботи додатку, напишіть на sergiypolezhaka [at] gmail.com</h5>
+    </div>
+
+<footer>
+    <span style="font-size: smaller;">Data source: data.gov.ua | Visualized by <a href="https://https://www.sergiipolezhaka.com/">Sergii Polezhaka</a></span>
+</footer>
+
+</body>
+</html>

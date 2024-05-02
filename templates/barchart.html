@@ -8,29 +8,37 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mpld3/0.5.5/mpld3.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
     <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
+    <style>
+        body { margin: 0; padding: 0; font-family: Helvetica, sans-serif; }
+        header { position: static; width: 95%; z-index: 1000; display: flex; justify-content: space-between; align-items: baseline; padding: 10px; }
+        header { top: 0; }
+        footer { bottom: 0; }
+        footer { position: fixed; width: 95%; z-index: 1000; text-align: center; padding: 10px; }
+        nav a { padding: 10px; } /* Adjusted line */
+        #chart { padding: 50px;}
+        h2 {margin-left: 50px;}
+    </style>
 </head>
 <body>
-    <h1>Barchart</h1>
-    <!-- Display the mpld3 plot -->
-    {{ mpld3_plot | safe }}
-    <!-- Display the image -->
-    <img src="{{ chart_path }}" alt="Barchart">
-    <h1>Compound Barchart</h1>
-    <!-- Display the mpld3 plot -->
-    {{ compound_mpld3_plot | safe }}
-    <!-- Display the image -->
-    <img src="{{ compound_chart_path }}" alt="Compound Barchart">
-    <h1>Pygal Barchart</h1>
-    <h1>1</h1>
+    <header>
+        <h1 style="margin-left: 20px;">Національне культурне надбання у музеях України</h1>
+        <nav>
+            <a href="/">Мапа</a>
+            <a href="/info_in_charts">Графік</a>
+            <a href="/about">Про проект</a>
+            <a href="https://data.gov.ua/en/dataset/014aba3a-63ed-4edf-b6b1-b26f1ad29953" target="_blank">Джерело</a>
+        </nav>
+    </header>
+    <h2>Типи експонатів та їх наявність у музеях</h2>
+
     <div id="chart">
         <!-- Embedding the Pygal chart using Base64 data URI -->
         <embed type="image/svg+xml" src="{{ pygal_bar_chart|safe }}" />
     </div>
-    <h1>2</h1>
-    <figure>
-        <embed type="image/svg+xml" src="mysvg.svg" />
-    </figure>
 
+<footer>
+    <span style="font-size: smaller;">Data source: data.gov.ua | Visualized by <a href="https://https://www.sergiipolezhaka.com/">Sergii Polezhaka</a></span>
+</footer>
 
 </body>
 </html>
