@@ -2,7 +2,6 @@ from flask import Flask, render_template
 import pandas as pd
 import matplotlib.pyplot as plt
 import matplotlib
-import mpld3
 import pygal
 from pygal.style import BlueStyle, Style
 from dotenv import load_dotenv
