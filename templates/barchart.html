@@ -7,18 +7,30 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.15.0/d3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mpld3/0.5.5/mpld3.min.js"></script>
     <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script type="text/javascript" src="http://kozea.github.com/pygal.js/latest/pygal-tooltips.min.js"></script>
 </head>
 <body>
     <h1>Barchart</h1>
     <!-- Display the mpld3 plot -->
-    <!-- {{ mpld3_plot | safe }} -->
+    {{ mpld3_plot | safe }}
     <!-- Display the image -->
-    <!-- <img src="{{ chart_path }}" alt="Barchart"> -->
+    <img src="{{ chart_path }}" alt="Barchart">
     <h1>Compound Barchart</h1>
     <!-- Display the mpld3 plot -->
     {{ compound_mpld3_plot | safe }}
     <!-- Display the image -->
     <img src="{{ compound_chart_path }}" alt="Compound Barchart">
+    <h1>Pygal Barchart</h1>
+    <h1>1</h1>
+    <div id="chart">
+        <!-- Embedding the Pygal chart using Base64 data URI -->
+        <embed type="image/svg+xml" src="{{ pygal_bar_chart|safe }}" />
+    </div>
+    <h1>2</h1>
+    <figure>
+        <embed type="image/svg+xml" src="mysvg.svg" />
+    </figure>
+
 
 </body>
 </html>

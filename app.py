@@ -4,6 +4,14 @@ import matplotlib.pyplot as plt
 import matplotlib
 import mpld3
 import pygal
+from pygal.style import BlueStyle, Style
+            
+# Define the custom style by inheriting from BlueStyle
+custom_blue_style = BlueStyle(
+    background='transparent'  # Set the background to transparent
+)
+
+
 matplotlib.use('Agg')
 
 app = Flask(__name__)
@@ -64,7 +72,10 @@ def info_in_charts():
 
         return mpld3_plot, chart_path
 
-    def create_compound_barchart(data):
+    # Call the function to create the chart and get the path
+    mpld3_plot, generated_chart_path = create_barchart(data)
+
+    def create_compound_mpld3barchart(data):
         # Group the data by "Museum Name" and "Class" and count the occurrences
         museum_class_counts = data.groupby(['Museum Name', 'Class']).size().unstack(fill_value=0)
 
@@ -103,14 +114,60 @@ def info_in_charts():
         plt.close()  # Close the plot to free up memory
 
         return compound_mpld3_plot, compound_chart_path
+    
+    # Call the function to create the compound chart and get the path
+    compound_mpld3_plot, compound_chart_path = create_compound_mpld3barchart(data)
 
-    # Call the function to create the chart and get the path
-    mpld3_plot, generated_chart_path = create_barchart(data)
+    def create_compound_Pygal_barchart(data):
+        # Group the data by "Museum Name" and "Class" and count the occurrences
+        museum_class_counts = data.groupby(['Museum Name', 'Class']).size().unstack(fill_value=0)
 
-    compound_mpld3_plot, compound_chart_path = create_compound_barchart(data)
+        # Calculate the total number of items in each museum
+        museum_total_counts = museum_class_counts.sum(axis=1)
+
+        # Sort museums based on total counts in descending order
+        museum_total_counts_sorted = museum_total_counts.sort_values(ascending=False)
+
+        # Sort the DataFrame based on the sorted museum names
+        museum_class_counts_sorted = museum_class_counts.loc[museum_total_counts_sorted.index]
+
+        # Convert index to list for Pygal
+        x_labels_major = museum_class_counts_sorted.index.tolist()
+
+        # Create a Pygal bar chart
+        pygal_bar_chart = pygal.StackedBar(
+            x_label_rotation=-45,
+            height=600,
+            width=1200,
+            rounded_bars=2,
+            margin=10,
+            title='Розподіл експонатів за музеями',
+            #x_title='Museum Name',
+            y_title='Кількість експонатів',
+            style=custom_blue_style,  # Customize the chart style
+            show_x_labels=False  # Hide x-axis labels
+            #truncate_label=-1
+        )
+        pygal_bar_chart.x_labels = x_labels_major
+        
+
+        # Add data to the bar chart
+        for column in museum_class_counts_sorted.columns:
+            pygal_bar_chart.add(column, museum_class_counts_sorted[column])
+        
+        #pygal_bar_chart.render_to_file('chart-insideAFn.svg')
+        pygal_bar_chart = pygal_bar_chart.render_data_uri()
+        return pygal_bar_chart
+
+
+    # Create the pygal barchart
+    pygal_bar_chart = create_compound_Pygal_barchart(data)
+
+    # Render the Pygal chart directly as a Base64 data URI
+    #pygal_chart = pygal_bar_chart.render_response()
 
     # Pass the chart path and mpld3 plot to the template
-    return render_template('barchart.html', mpld3_plot=mpld3_plot, chart_path=generated_chart_path, compound_mpld3_plot=compound_mpld3_plot, compound_chart_path=compound_chart_path)
+    return render_template('barchart.html', mpld3_plot=mpld3_plot, chart_path=generated_chart_path, compound_mpld3_plot=compound_mpld3_plot, compound_chart_path=compound_chart_path, pygal_bar_chart=pygal_bar_chart)
 
 if __name__ == '__main__':
     app.run(debug=True)  # Enable debug mode
