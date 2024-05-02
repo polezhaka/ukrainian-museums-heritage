@@ -37,8 +37,10 @@
     </header>
 <div id='map'></div>
 
+<script src="config.js"></script>
+
 <script>
-    mapboxgl.accessToken = 'pk.eyJ1IjoicG9sZXpoYWthIiwiYSI6ImNsdm4wazF3azA3NnkyaXAxMDllY3hmbzQifQ.oawJGIDDebEB1sR-a_BwDA';
+    mapboxgl.accessToken = '{{ mapbox_access_token }}';
     const map = new mapboxgl.Map({
         container: 'map',
         style: 'mapbox://styles/mapbox/light-v11',

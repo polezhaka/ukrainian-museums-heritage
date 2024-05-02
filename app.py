@@ -5,12 +5,16 @@ import matplotlib
 import mpld3
 import pygal
 from pygal.style import BlueStyle, Style
+from dotenv import load_dotenv
+import os
             
 # Define the custom style by inheriting from BlueStyle
 custom_blue_style = BlueStyle(
     background='transparent'  # Set the background to transparent
 )
 
+# Load environment variables from .env file
+load_dotenv()
 
 matplotlib.use('Agg')
 
@@ -36,7 +40,9 @@ def index():
     # Save the DataFrame to a CSV file
     unique_museums_with_location_df.to_csv('unique_museums_with_location.csv', index=False)
 
-    return render_template('index.html', data=unique_museums_with_location)
+    mapbox_access_token = os.getenv('MAPBOX_ACCESS_TOKEN')
+
+    return render_template('index.html', data=unique_museums_with_location, mapbox_access_token=mapbox_access_token)
 
 
 @app.route('/info_in_charts')
